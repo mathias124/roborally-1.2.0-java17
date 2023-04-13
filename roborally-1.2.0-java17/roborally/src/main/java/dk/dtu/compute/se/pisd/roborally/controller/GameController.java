@@ -211,16 +211,12 @@ public class GameController {
                     ChoiceDialog<String> dialog = new ChoiceDialog<>(OPTIONS_Interactive.get(0), OPTIONS_Interactive);
                     dialog.setTitle("Player choice");
                     Optional<String> result = dialog.showAndWait();
-                    if(result == OPTIONS_Interactive.get(0).describeConstable()){ //Issue is here. (Take the correct string to turn).
+                    if(result.get() == "Left") {
                         this.turnLeft(player);
                     }
-                    else if(result.equals("Optional[Right]")) {
+                    else if(result.get() == "Right") {
                         this.turnRight(player);
-                        System.out.println(result);
                     }break;
-
-
-
                     // DO NOTHING (for now)
             }
         }
