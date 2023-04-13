@@ -160,6 +160,11 @@ public class GameController {
                 CommandCard card = currentPlayer.getProgramField(step).getCard();
                 if (card != null) {
                     Command command = card.command;
+                    if(command.isInteractive()){
+                        board.setPhase(Phase.PLAYER_INTERACTION);
+                        return;
+
+                    }
                     executeCommand(currentPlayer, command);
                 }
                 int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
@@ -207,7 +212,7 @@ public class GameController {
                     break;
                 default:
                 case OPTION_LEFT_RIGHT:
-                    command.getOptions();
+                   /* command.getOptions();
                     ChoiceDialog<String> dialog = new ChoiceDialog<>(OPTIONS_Interactive.get(0), OPTIONS_Interactive);
                     dialog.setTitle("Player choice");
                     Optional<String> result = dialog.showAndWait();
@@ -217,7 +222,10 @@ public class GameController {
                     else if(result.equals("Optional[Right]")) {
                         this.turnRight(player);
                         System.out.println(result);
-                    }break;
+
+                    */
+                  //  }
+                    break;
 
 
 
@@ -228,7 +236,7 @@ public class GameController {
 
     // TODO: V2
     public void moveForward(@NotNull Player player) {
-        Space space = player.getSpace();
+       /* Space space = player.getSpace();
         if (player != null && player.board == board && space != null) {
             Heading heading = player.getHeading();
             Space target = board.getNeighbour(space, heading);
@@ -239,6 +247,9 @@ public class GameController {
                 target.setPlayer(player);
             }
         }
+
+        */
+        board.getNeighbour(board.getCurrentPlayer().getSpace(),board.getCurrentPlayer().getHeading()).setPlayer(board.getCurrentPlayer());
     }
 
     // TODO: V2
@@ -249,16 +260,40 @@ public class GameController {
 
     // TODO: V2
     public void turnRight(@NotNull Player player) {
-        if (player != null && player.board == board) {
+       /* if (player != null && player.board == board) {
             player.setHeading(player.getHeading().next());
         }
+
+        */
+
+        if(board.getCurrentPlayer().getHeading()==Heading.NORTH)
+            player.setHeading(Heading.EAST);
+
+        else if(board.getCurrentPlayer().getHeading()==Heading.EAST)
+            player.setHeading(Heading.SOUTH);
+        else if(board.getCurrentPlayer().getHeading()==Heading.SOUTH)
+            player.setHeading(Heading.WEST);
+        else if(board.getCurrentPlayer().getHeading()==Heading.WEST)
+            player.setHeading(Heading.NORTH);
     }
 
     // TODO: V2
     public void turnLeft(@NotNull Player player) {
-        if (player != null && player.board == board) {
+       /* if (player != null && player.board == board) {
+
             player.setHeading(player.getHeading().prev());
         }
+
+        */
+
+        if(board.getCurrentPlayer().getHeading()==Heading.NORTH)
+            player.setHeading(Heading.WEST);
+        else if(board.getCurrentPlayer().getHeading()==Heading.EAST)
+            player.setHeading(Heading.NORTH);
+        else if(board.getCurrentPlayer().getHeading()==Heading.SOUTH)
+            player.setHeading(Heading.EAST);
+        else if(board.getCurrentPlayer().getHeading()==Heading.WEST)
+            player.setHeading(Heading.SOUTH);
     }
 
     public boolean moveCards(@NotNull CommandCardField source, @NotNull CommandCardField target) {
