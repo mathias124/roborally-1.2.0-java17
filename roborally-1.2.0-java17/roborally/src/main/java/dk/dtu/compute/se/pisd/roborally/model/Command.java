@@ -21,7 +21,6 @@
  */
 package dk.dtu.compute.se.pisd.roborally.model;
 
-import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -29,8 +28,8 @@ import java.util.List;
 /**
  * ...
  *
- * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @author Ekkart Kindler, with Abid and Mathias build on top.
+ * @version 1.0
  */
 public enum Command {
 
@@ -40,9 +39,12 @@ public enum Command {
     RIGHT("Turn Right"),
     LEFT("Turn Left"),
     FAST_FORWARD("Fast Fwd"),
+    UTURN("UTURN"),
 
     // XXX Assignment P3
     OPTION_LEFT_RIGHT("Left OR Right", LEFT, RIGHT);
+
+
     final public String displayName;
 
     // XXX Assignment P3
@@ -53,7 +55,11 @@ public enum Command {
     // replaced by the code below:
 
     final private List<Command> options;
+    /**
 
+     Constructs a new Command enum with the given display name Using the previous created Enu sentenced with Forward,Right,Left,Fast,Forward.
+     @param displayName the display name of the command
+     */
     Command(String displayName, Command... options) {
         this.displayName = displayName;
         this.options = Collections.unmodifiableList(Arrays.asList(options));

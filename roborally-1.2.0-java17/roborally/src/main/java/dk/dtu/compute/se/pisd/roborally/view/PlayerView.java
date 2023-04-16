@@ -63,6 +63,17 @@ public class PlayerView extends Tab implements ViewObserver {
     private VBox playerInteractionPanel;
 
     private GameController gameController;
+    /**
+
+ *  Constructs a PlayerView constructor for the class imported specified GameController and Player instances.
+
+      * Initializes all of the required fields and creates UI objects via programPane & Labes. Furthermore, loops cardFieldView.
+     * Also creates buttonFunctionality with the methods in GameController.
+
+    *  @param gameController the GameController instance that controls the game
+
+     * @param player the Player instance associated with this PlayerView instance
+     */
 
     public PlayerView(@NotNull GameController gameController, @NotNull Player player) {
         super(player.getName());
@@ -133,7 +144,10 @@ public class PlayerView extends Tab implements ViewObserver {
             update(player.board);
         }
     }
-
+    /**
+     Updates the view for the given subject. Specifically, this method updates the view of the program cards for the player's board and retrives the currentplayer in terms of doing the update.
+     @param subject the subject to update the view for
+     */
     @Override
     public void updateView(Subject subject) {
         if (subject == player.board) {
@@ -192,7 +206,12 @@ public class PlayerView extends Tab implements ViewObserver {
                         stepButton.setDisable(true);
                 }
 
-
+/**
+ This method updates the program view with the current state of the game board.
+ If the current phase is not PLAYER_INTERACTION, it removes the button panel and adds the player interaction panel for user ability,
+ then clears its view and adds buttons for the interactive command card, if there is one.
+ @param subject the subject being observed
+ */
             } else {
                 if (!programPane.getChildren().contains(playerInteractionPanel)) {
                     programPane.getChildren().remove(buttonPanel);
@@ -220,12 +239,6 @@ public class PlayerView extends Tab implements ViewObserver {
                         playerInteractionPanel.getChildren().add(optionButton);
 
                     }
-
-
-
-
-
-
 
 
                     }

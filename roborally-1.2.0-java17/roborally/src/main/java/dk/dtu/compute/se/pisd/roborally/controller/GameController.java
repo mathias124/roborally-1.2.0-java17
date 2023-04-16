@@ -206,10 +206,14 @@ public class GameController {
                 case LEFT:
                     this.turnLeft(player);
                     break;
+                case UTURN:
+                    this.uTurn(player);
+                    break;
                 case FAST_FORWARD:
                     this.fastForward(player);
                     break;
                 default:
+
                 case OPTION_LEFT_RIGHT:
                    /* command.getOptions();
                     ChoiceDialog<String> dialog = new ChoiceDialog<>(OPTIONS_Interactive.get(0), OPTIONS_Interactive);
@@ -282,6 +286,8 @@ public class GameController {
             player.setHeading(Heading.NORTH);
     }
 
+
+
     /**
      * Moves the player's heading direction 90 degress, or left and checks for the current phasing direction.
      */
@@ -301,6 +307,11 @@ public class GameController {
             player.setHeading(Heading.EAST);
         else if(board.getCurrentPlayer().getHeading()==Heading.WEST)
             player.setHeading(Heading.SOUTH);
+    }
+
+    public void uTurn(@NotNull Player player) {
+        turnLeft(player);
+        turnLeft(player);
     }
     /**
      * Moves a command card from a source field to a target field.
