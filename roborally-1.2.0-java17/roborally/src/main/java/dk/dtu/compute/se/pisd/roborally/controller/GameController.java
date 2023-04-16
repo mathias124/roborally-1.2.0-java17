@@ -36,7 +36,7 @@ import java.util.List;
 public class GameController {
 
     final public Board board;
-    final private List<String> OPTIONS_Interactive = Arrays.asList("Left", "Right");
+    final private List<String> OPTIONS_Interactive = Arrays.asList("Left","Right");
 
     public GameController(@NotNull Board board) {
         this.board = board;
@@ -48,7 +48,7 @@ public class GameController {
      *
      * @param space the space to which the current player should move
      */
-    public void moveCurrentPlayerToSpace(@NotNull Space space) {
+    public void moveCurrentPlayerToSpace(@NotNull Space space)  {
         // TODO Assignment V1: method should be implemented by the students:
         //   - the current player should be moved to the given space
         //     (if it is free()
@@ -157,7 +157,7 @@ public class GameController {
                 CommandCard card = currentPlayer.getProgramField(step).getCard();
                 if (card != null) {
                     Command command = card.command;
-                    if (command.isInteractive()) {
+                    if(command.isInteractive()){
                         board.setPhase(Phase.PLAYER_INTERACTION);
                         return;
 
@@ -221,11 +221,12 @@ public class GameController {
                         System.out.println(result);
 
                     */
-                    //  }
+                  //  }
                     break;
 
 
-                // DO NOTHING (for now)
+
+                    // DO NOTHING (for now)
             }
         }
     }
@@ -245,7 +246,7 @@ public class GameController {
         }
 
         */
-        board.getNeighbour(board.getCurrentPlayer().getSpace(), board.getCurrentPlayer().getHeading()).setPlayer(board.getCurrentPlayer());
+        board.getNeighbour(board.getCurrentPlayer().getSpace(),board.getCurrentPlayer().getHeading()).setPlayer(board.getCurrentPlayer());
     }
 
     // TODO: V2
@@ -262,14 +263,14 @@ public class GameController {
 
         */
 
-        if (board.getCurrentPlayer().getHeading() == Heading.NORTH)
+        if(board.getCurrentPlayer().getHeading()==Heading.NORTH)
             player.setHeading(Heading.EAST);
 
-        else if (board.getCurrentPlayer().getHeading() == Heading.EAST)
+        else if(board.getCurrentPlayer().getHeading()==Heading.EAST)
             player.setHeading(Heading.SOUTH);
-        else if (board.getCurrentPlayer().getHeading() == Heading.SOUTH)
+        else if(board.getCurrentPlayer().getHeading()==Heading.SOUTH)
             player.setHeading(Heading.WEST);
-        else if (board.getCurrentPlayer().getHeading() == Heading.WEST)
+        else if(board.getCurrentPlayer().getHeading()==Heading.WEST)
             player.setHeading(Heading.NORTH);
     }
 
@@ -282,13 +283,13 @@ public class GameController {
 
         */
 
-        if (board.getCurrentPlayer().getHeading() == Heading.NORTH)
+        if(board.getCurrentPlayer().getHeading()==Heading.NORTH)
             player.setHeading(Heading.WEST);
-        else if (board.getCurrentPlayer().getHeading() == Heading.EAST)
+        else if(board.getCurrentPlayer().getHeading()==Heading.EAST)
             player.setHeading(Heading.NORTH);
-        else if (board.getCurrentPlayer().getHeading() == Heading.SOUTH)
+        else if(board.getCurrentPlayer().getHeading()==Heading.SOUTH)
             player.setHeading(Heading.EAST);
-        else if (board.getCurrentPlayer().getHeading() == Heading.WEST)
+        else if(board.getCurrentPlayer().getHeading()==Heading.WEST)
             player.setHeading(Heading.SOUTH);
     }
 
@@ -312,19 +313,29 @@ public class GameController {
         // XXX just for now to indicate that the actual method is not yet implemented
         assert false;
     }
-
-    public void executeCommandOptionAndContinue(Player player, Command command) {
+    public void executeCommandOptionAndContinue(Player player,Command comman2){
         board.setPhase(Phase.ACTIVATION);
-        this.executeCommand(player, command);
+        this.executeCommand(player,comman2);
 
 
-        Player currentPlayer = board.getCurrentPlayer();
-        int step = board.getStep();
-        if (step >= 0 && step < Player.NO_REGISTERS) {
-            CommandCard card = currentPlayer.getProgramField(step).getCard();
-        }
+
+            int step = board.getStep();
+
+                    step++;
+                    if (step < Player.NO_REGISTERS) {
+                        makeProgramFieldsVisible(step);
+                        board.setStep(step);
+                        board.setCurrentPlayer(board.getPlayer(0));
+                    } else {
+                        startProgrammingPhase();
+                    }
+                    continuePrograms();
 
 
-    }
+            }
+
+
+
+
 
 }
