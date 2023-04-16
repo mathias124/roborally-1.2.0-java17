@@ -32,8 +32,9 @@ import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
 /**
  * ...
  *
- * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @author Ekkart Kindler, ekki@dtu.dk med et twist fra Mathias og Abdi fra gruppe 21
+ * @version 1.0 prototype
+ * @since 2023-04-16
  */
 public class Board extends Subject {
 

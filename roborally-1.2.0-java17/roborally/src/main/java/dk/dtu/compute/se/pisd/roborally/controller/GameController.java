@@ -30,11 +30,14 @@ import java.util.List;
 /**
  * ...
  *
- * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @author Abdi og Mathias
+ * @version 1.0 prototype.
+ *  @since 2023-04-16
  */
 public class GameController {
-
+    /**
+     * Creates an empty gameboard which the game controller is associated with.
+     */
     final public Board board;
     final private List<String> OPTIONS_Interactive = Arrays.asList("Left","Right");
 
@@ -43,19 +46,15 @@ public class GameController {
     }
 
     /**
-     * This is just some dummy controller operation to make a simple move to see something
-     * happening on the board. This method should eventually be deleted!
-     *
+
      * @param space the space to which the current player should move
      */
     public void moveCurrentPlayerToSpace(@NotNull Space space)  {
-        // TODO Assignment V1: method should be implemented by the students:
-        //   - the current player should be moved to the given space
-        //     (if it is free()
-        //   - and the current player should be set to the player
-        //     following the current player
-        //   - the counter of moves in the game should be increased by one
-        //     if the player is moved
+        /**
+         * Moves the current player to the specified space and sets the current player to the next player by +1 and currentplayer.
+         *
+         * @param space the space to which the current player should move too.
+         */
 
         if (space != null && space.board == board) {
             Player currentPlayer = board.getCurrentPlayer();
@@ -98,7 +97,10 @@ public class GameController {
         return new CommandCard(commands[random]);
     }
 
-    // XXX: V2
+    /**
+     * This is the method for the button of FinishProgrammignPhase. It hides the fields, and  makes the first field visible for each player,
+     * It will set the games phase to activationPhase after Clicked(input).It will also set the current player to the first player, and setting the current step to zero.
+     */
     public void finishProgrammingPhase() {
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(0);
@@ -187,12 +189,12 @@ public class GameController {
         }
     }
 
-    // XXX: V2
+    /**
+     * ExecuteCommand Checks the player and command and then uses a switch statement to determine the form's of Commandcards.
+     */
     private void executeCommand(@NotNull Player player, Command command) {
         if (player != null && player.board == board && command != null) {
-            // XXX This is a very simplistic way of dealing with some basic cards and
-            //     their execution. This should eventually be done in a more elegant way
-            //     (this concerns the way cards are modelled as well as the way they are executed).
+
 
             switch (command) {
                 case FORWARD:
@@ -231,7 +233,9 @@ public class GameController {
         }
     }
 
-    // TODO: V2
+    /**
+     * Moves the player 1 vector direction forward, depending on the heading.
+     */
     public void moveForward(@NotNull Player player) {
        /* Space space = player.getSpace();
         if (player != null && player.board == board && space != null) {
@@ -249,13 +253,17 @@ public class GameController {
         board.getNeighbour(board.getCurrentPlayer().getSpace(),board.getCurrentPlayer().getHeading()).setPlayer(board.getCurrentPlayer());
     }
 
-    // TODO: V2
+    /**
+     * Moves the player 2 vector direction forward, depending on the heading. by calling the forward method
+     */
     public void fastForward(@NotNull Player player) {
         moveForward(player);
         moveForward(player);
     }
 
-    // TODO: V2
+    /**
+     * Moves the player's heading direction 90 degress, or right and checks for the current phasing direction.
+     */
     public void turnRight(@NotNull Player player) {
        /* if (player != null && player.board == board) {
             player.setHeading(player.getHeading().next());
@@ -274,7 +282,9 @@ public class GameController {
             player.setHeading(Heading.NORTH);
     }
 
-    // TODO: V2
+    /**
+     * Moves the player's heading direction 90 degress, or left and checks for the current phasing direction.
+     */
     public void turnLeft(@NotNull Player player) {
        /* if (player != null && player.board == board) {
 
@@ -292,7 +302,13 @@ public class GameController {
         else if(board.getCurrentPlayer().getHeading()==Heading.WEST)
             player.setHeading(Heading.SOUTH);
     }
-
+    /**
+     * Moves a command card from a source field to a target field.
+     * @param source the source field from which to move the command card
+     * @param target the target field to which to move the command card
+     * @return true if the move was successful, false otherwise
+     * @throws NullPointerException if either source or target is null
+     */
     public boolean moveCards(@NotNull CommandCardField source, @NotNull CommandCardField target) {
         CommandCard sourceCard = source.getCard();
         CommandCard targetCard = target.getCard();
@@ -305,14 +321,16 @@ public class GameController {
         }
     }
 
-    /**
-     * A method called when no corresponding controller operation is implemented yet. This
-     * should eventually be removed.
-     */
     public void notImplemented() {
         // XXX just for now to indicate that the actual method is not yet implemented
         assert false;
     }
+    /**
+     Executes a command option for a player and continues the game with the OptionInteractive card. It sets phase to Activation Phase.
+     @param player the player for whom to execute the command option
+
+     @param comman2 the command  the option to execute with userinput.
+     */
     public void executeCommandOptionAndContinue(Player player,Command comman2){
         board.setPhase(Phase.ACTIVATION);
         this.executeCommand(player,comman2);
