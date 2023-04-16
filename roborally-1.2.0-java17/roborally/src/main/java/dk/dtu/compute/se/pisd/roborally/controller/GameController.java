@@ -237,7 +237,7 @@ public class GameController {
      * Moves the player 1 vector direction forward, depending on the heading.
      */
     public void moveForward(@NotNull Player player) {
-       /* Space space = player.getSpace();
+        Space space = player.getSpace();
         if (player != null && player.board == board && space != null) {
             Heading heading = player.getHeading();
             Space target = board.getNeighbour(space, heading);
@@ -245,13 +245,12 @@ public class GameController {
                 // XXX note that this removes an other player from the space, when there
                 //     is another player on the target. Eventually, this needs to be
                 //     implemented in a way so that other players are pushed away!
+                if (target.getPlayer() != null) {
+                    Player old = target.getPlayer();
+                    moveForward(old);
+                }
                 target.setPlayer(player);
-            }
-        }
-
-        */
-        board.getNeighbour(board.getCurrentPlayer().getSpace(),board.getCurrentPlayer().getHeading()).setPlayer(board.getCurrentPlayer());
-    }
+            }}}
 
     /**
      * Moves the player 2 vector direction forward, depending on the heading. by calling the forward method
