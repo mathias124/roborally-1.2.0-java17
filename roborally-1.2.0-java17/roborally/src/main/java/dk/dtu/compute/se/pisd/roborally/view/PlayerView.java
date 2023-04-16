@@ -32,6 +32,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 /**
  * ...
  *
@@ -203,18 +205,36 @@ public class PlayerView extends Tab implements ViewObserver {
                     //      an interactive command card, and the buttons should represent
                     //      the player's choices of the interactive command card. The
                     //      following is just a mockup showing two options
-                    Button optionButton = new Button("Option1");
-                    optionButton.setOnAction( e -> gameController.notImplemented());
-                    optionButton.setDisable(false);
-                    playerInteractionPanel.getChildren().add(optionButton);
 
-                    optionButton = new Button("Option 2");
-                    optionButton.setOnAction( e -> gameController.notImplemented());
-                    optionButton.setDisable(false);
-                    playerInteractionPanel.getChildren().add(optionButton);
+
+                    int step = player.board.getStep();
+                    CommandCard card = player.getProgramField(step).getCard();
+                    List list = card.command.getOptions();
+
+
+                    for (int i =0; i< list.size();i++){
+                        Button optionButton = new Button(list.get(i).toString());
+                        Command co = (Command) list.get(i);
+                        optionButton.setOnAction( e -> gameController.executeCommandOptionAndContinue(player,co));
+                        optionButton.setDisable(false);
+                        playerInteractionPanel.getChildren().add(optionButton);
+
+                    }
+
+
+
+
+
+
+
+
+                    }
+
+
+
                 }
-            }
+        }
         }
     }
 
-}
+

@@ -51,6 +51,8 @@ public class PlayersView extends TabPane implements ViewObserver {
         }
         board.attach(this);
         update(board);
+
+
     }
 
     @Override
