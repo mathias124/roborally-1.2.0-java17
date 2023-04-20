@@ -85,28 +85,12 @@ class GameControllerTest {
 
         }
     @Test
-    void carCrash() {
+    void UturnTest() {
         Board board = gameController.board;
-
         Player player1 = board.getPlayer(0);
         player1.setHeading(Heading.WEST);
-        Heading Before = player1.getHeading();
-        gameController.u
-
-
-        Assertions.assertEquals(player1, board.getSpace(0, 0).getPlayer(), "Player " + player1.getName() + " should beSpace (0,0)!");
-        Assertions.assertEquals(player2, board.getSpace(1, 1).getPlayer(), "Player " + player2.getName() + " should beSpace (1,1)!");
-        player2.setHeading(Heading.SOUTH);
-
-        gameController.turnLeft(player1);
-        gameController.moveForward(player1);
-        gameController.turnRight(player1);
-        gameController.moveForward(player1);
-
-
-
-        Assertions.assertEquals(player1, board.getSpace(1, 1).getPlayer(), "Player " + player1.getName() + " should beSpace (1,1)!");
-        Assertions.assertEquals(player2, board.getSpace(1, 2).getPlayer(), "Player " + player2.getName() + " should beSpace (1,2)!");
+        gameController.uTurn(player1);
+        Assertions.assertEquals(Heading.EAST, player1.getHeading(), "Player turned form west to east");
 
     }
 
