@@ -46,7 +46,6 @@ public class GameController {
     }
 
     /**
-
      * @param space the space to which the current player should move
      */
     public void moveCurrentPlayerToSpace(@NotNull Space space)  {
@@ -60,6 +59,8 @@ public class GameController {
             Player currentPlayer = board.getCurrentPlayer();
             if (currentPlayer != null && space.getPlayer() == null) {
                 currentPlayer.setSpace(space);
+               //
+
                 int playerNumber = (board.getPlayerNumber(currentPlayer) + 1) % board.getPlayersNumber();
                 board.setCurrentPlayer(board.getPlayer(playerNumber));
             }
@@ -242,7 +243,18 @@ public class GameController {
      */
     public void moveForward(@NotNull Player player) {
         Space space = player.getSpace();
-        if (player != null && player.board == board && space != null) {
+        Space playerSpace = player.getSpace();
+
+
+        //moveForward(playerSpace.getPlayer(), player.getHeading(),check);
+
+        //}
+        //if(spaceTaken(playerSpace)) {
+        // return;
+        //}
+        //player.setSpace(playerSpace);
+        if (player != null && player.board == board && space != null && playerSpace.wallFace(player.getHeading())) {
+
             Heading heading = player.getHeading();
             Space target = board.getNeighbour(space, heading);
             if (target != null) {
@@ -254,7 +266,21 @@ public class GameController {
                     moveForward(old);
                 }
                 target.setPlayer(player);
-            }}}
+            }
+        } else if (player != null && player.board == board && space != null) {
+            int check = 1;
+            //int check =1;
+            for (int i = 0; i < check; i++) {
+                if (!playerSpace.PlacedWall(player.getHeading())) {
+                    continue;
+                }
+                playerSpace = player.board.getNeighbour(playerSpace, player.getHeading());
+                if (playerSpace.getPlayer() != null) {
+                    moveForward(player);
+                }
+            }
+        }
+    }
 
     /**
      * Moves the player 2 vector direction forward, depending on the heading. by calling the forward method
@@ -291,12 +317,6 @@ public class GameController {
      * Moves the player's heading direction 90 degress, or left and checks for the current phasing direction.
      */
     public void turnLeft(@NotNull Player player) {
-       /* if (player != null && player.board == board) {
-
-            player.setHeading(player.getHeading().prev());
-        }
-
-        */
 
         if(board.getCurrentPlayer().getHeading()==Heading.NORTH)
             player.setHeading(Heading.WEST);
@@ -307,6 +327,27 @@ public class GameController {
         else if(board.getCurrentPlayer().getHeading()==Heading.WEST)
             player.setHeading(Heading.SOUTH);
     }
+
+    boolean spaceTaken(Space space) {
+        return space.getPlayer() !=null;
+    }
+   /* private void playerWallInteraction(@NotNull Player player, Heading playerDir, int amount){
+        Space playerSpace = player.getSpace();
+        //int check =1;
+        for(int i =0; i < amount; i++) {
+            if (!playerSpace.PlacedWall(playerDir)) {
+                continue;
+            }
+            playerSpace = player.board.getNeighbour(playerSpace, playerDir);
+            if (playerSpace.getPlayer() != null) {
+                playerWallInteraction(playerSpace.getPlayer(), playerDir,amount);
+            }
+        }
+            if(spaceTaken(playerSpace)) {
+                return;
+            }
+            player.setSpace(playerSpace);
+       */ //}
 
 
     public void uTurn(@NotNull Player player) {

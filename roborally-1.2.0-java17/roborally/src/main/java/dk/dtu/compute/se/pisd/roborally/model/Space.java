@@ -60,6 +60,7 @@ public class Space extends Subject {
     }
 
 
+
     public void addWall(Heading playerDirection) {
         if(!PlacedWall(playerDirection)) {
             wall.add(playerDirection);
@@ -70,6 +71,7 @@ public class Space extends Subject {
     public boolean PlacedWall(Heading playerDirection) {
      return wall.contains(playerDirection);
     }
+
 
     public void setPlayer(Player player) {
         Player oldPlayer = this.player;
@@ -92,6 +94,7 @@ public class Space extends Subject {
             return false;
         }
         Space checkNeighbor = board.getNeighbour(this, wallFace);
+
         if (checkNeighbor.PlacedWall(Heading.EAST.next())) {
             return false;
         }
