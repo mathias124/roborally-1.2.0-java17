@@ -20,7 +20,6 @@
  *
  */
 package dk.dtu.compute.se.pisd.roborally.view;
-
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
@@ -32,6 +31,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
+
 
 /**
  * ...
@@ -46,9 +46,9 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     public final Space space;
 
-
     public SpaceView(@NotNull Space space) {
         this.space = space;
+
 
         // XXX the following styling should better be done with styles
         this.setPrefWidth(SPACE_WIDTH);
@@ -61,8 +61,16 @@ public class SpaceView extends StackPane implements ViewObserver {
 
         if ((space.x + space.y) % 2 == 0) {
             this.setStyle("-fx-background-color: white;");
-        } else {
+        }
+
+        else {
             this.setStyle("-fx-background-color: black;");
+        }
+        if (space.getConveyor()!=null && space.getConveyor().getColour()=="blue"){
+            this.setStyle("-fx-background-color: #003cff;");
+        }
+        if (space.getConveyor()!=null && space.getConveyor().getColour()=="green"){
+            this.setStyle("-fx-background-color: #00ff0d;");
         }
 
         // updatePlayer();
@@ -76,6 +84,8 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.getChildren().clear();
 
         Player player = space.getPlayer();
+
+
         if (player != null) {
             Polygon arrow = new Polygon(0.0, 0.0,
                     10.0, 20.0,
@@ -89,6 +99,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             arrow.setRotate((90*player.getHeading().ordinal())%360);
             this.getChildren().add(arrow);
         }
+
     }
 
     @Override

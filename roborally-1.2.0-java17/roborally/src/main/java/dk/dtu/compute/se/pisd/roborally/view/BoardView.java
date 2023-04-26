@@ -23,10 +23,7 @@ package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
-import dk.dtu.compute.se.pisd.roborally.model.Board;
-import dk.dtu.compute.se.pisd.roborally.model.Phase;
-import dk.dtu.compute.se.pisd.roborally.model.Player;
-import dk.dtu.compute.se.pisd.roborally.model.Space;
+import dk.dtu.compute.se.pisd.roborally.model.*;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -56,6 +53,8 @@ public class BoardView extends VBox implements ViewObserver {
     public BoardView(@NotNull GameController gameController) {
         board = gameController.board;
 
+         ;
+
         mainBoardPane = new GridPane();
         playersView = new PlayersView(gameController);
         statusLabel = new Label("<no status>");
@@ -71,22 +70,30 @@ public class BoardView extends VBox implements ViewObserver {
         for (int x = 0; x < board.width; x++) {
             for (int y = 0; y < board.height; y++) {
                 Space space = board.getSpace(x, y);
+
                 SpaceView spaceView = new SpaceView(space);
+
                 spaces[x][y] = spaceView;
+
                 mainBoardPane.add(spaceView, x, y);
                 spaceView.setOnMouseClicked(spaceEventHandler);
             }
         }
 
+
         board.attach(this);
         update(board);
+
     }
 
     @Override
     public void updateView(Subject subject) {
         if (subject == board) {
+            conveyorBelt conveyor;
             Phase phase = board.getPhase();
             statusLabel.setText(board.getStatusMessage());
+
+
         }
     }
 

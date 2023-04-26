@@ -254,7 +254,30 @@ public class GameController {
                     moveForward(old);
                 }
                 target.setPlayer(player);
-            }}}
+            }
+
+        Space space3 = player.getSpace();
+         conveyorBelt conveyor = space3.getConveyor();
+        if(conveyor!=null){
+            String colour  = conveyor.getColour();
+            Heading heading2= conveyor.getDirection();
+            player.setHeading(heading2);
+            if(colour.equals("blue")){
+                this.fastForward(player);
+            }
+            else {
+                this.moveForward(player);
+            }
+
+
+
+
+
+
+        }}
+
+
+    }
 
     /**
      * Moves the player 2 vector direction forward, depending on the heading. by calling the forward method

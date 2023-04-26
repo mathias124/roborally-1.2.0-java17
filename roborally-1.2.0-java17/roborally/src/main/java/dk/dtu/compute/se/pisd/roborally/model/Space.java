@@ -37,6 +37,7 @@ public class Space extends Subject {
     public final int y;
 
     private Player player;
+    private conveyorBelt Conveyor;
 
     public Space(Board board, int x, int y) {
         this.board = board;
@@ -72,4 +73,11 @@ public class Space extends Subject {
         notifyChange();
     }
 
+    public conveyorBelt getConveyor() {
+        return Conveyor;
+    }
+
+    public void setConveyor(conveyorBelt conveyor) {
+        Conveyor = conveyor;
+    }
 }

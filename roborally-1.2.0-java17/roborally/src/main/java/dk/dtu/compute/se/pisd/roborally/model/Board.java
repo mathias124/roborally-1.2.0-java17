@@ -67,9 +67,19 @@ public class Board extends Subject {
             for(int y = 0; y < height; y++) {
                 Space space = new Space(this, x, y);
                 spaces[x][y] = space;
+
             }
         }
         this.stepMode = false;
+conveyorBelt con1 = new conveyorBelt("blue",Heading.SOUTH);
+        conveyorBelt con3 = new conveyorBelt("green",Heading.WEST);
+
+        // Test for conveyor belt : Delete this later
+        spaces[2][0].setConveyor(con1);
+        spaces[3][4].setConveyor(con3);
+        spaces[0][5].setConveyor(con1);
+        spaces[5][7].setConveyor(con3);
+
     }
 
     public Board(int width, int height) {
