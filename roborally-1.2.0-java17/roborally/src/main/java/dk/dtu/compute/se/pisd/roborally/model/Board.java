@@ -65,7 +65,18 @@ public class Board extends Subject {
         spaces = new Space[width][height];
         for (int x = 0; x < width; x++) {
             for(int y = 0; y < height; y++) {
-                Space space = new Space(this, x, y);
+                Space space;
+                //Space space = new Space(this, x, y);
+                space = new Space(this, x, y);
+                if(x==4 && y==4) {
+                    space.addWall(Heading.NORTH);
+            }
+                if(x==3 && y==4) {
+                    space.addWall(Heading.NORTH);
+                }
+                if(x==2 && y==4) {
+                    space.addWall(Heading.NORTH);
+                }
                 spaces[x][y] = space;
             }
         }

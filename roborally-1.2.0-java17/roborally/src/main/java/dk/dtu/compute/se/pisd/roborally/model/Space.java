@@ -23,6 +23,9 @@ package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * ...
  *
@@ -33,20 +36,39 @@ public class Space extends Subject {
 
     public final Board board;
 
+    private final ArrayList<Heading> wall;
+
     public final int x;
     public final int y;
 
     private Player player;
 
     public Space(Board board, int x, int y) {
+        this(board, x, y, new Heading[0]);
+    }
+
+    public Space(Board board, int x, int y,Heading...wall) {
         this.board = board;
         this.x = x;
         this.y = y;
+        this.wall = new ArrayList<>(Arrays.stream(wall).toList());
         player = null;
     }
 
     public Player getPlayer() {
         return player;
+    }
+
+
+    public void addWall(Heading playerDirection) {
+        if(!PlacedWall(playerDirection)) {
+            wall.add(playerDirection);
+            notifyChange();
+        }
+    }
+
+    public boolean PlacedWall(Heading playerDirection) {
+     return wall.contains(playerDirection);
     }
 
     public void setPlayer(Player player) {
@@ -63,6 +85,20 @@ public class Space extends Subject {
             }
             notifyChange();
         }
+    }
+
+    public boolean wallFace(Heading wallFace) {
+        if (PlacedWall(wallFace) == true) {
+            return false;
+        }
+        Space checkNeighbor = board.getNeighbour(this, wallFace);
+        if (checkNeighbor.PlacedWall(Heading.EAST.next())) {
+            return false;
+        }
+        if (checkNeighbor.getPlayer() == null) {
+            return true;
+        }
+    return checkNeighbor.wallFace(wallFace);
     }
 
     void playerChanged() {
