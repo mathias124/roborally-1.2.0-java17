@@ -40,9 +40,11 @@ public class GameController {
      */
     final public Board board;
     final private List<String> OPTIONS_Interactive = Arrays.asList("Left","Right");
-
+    int turn=0;
     public GameController(@NotNull Board board) {
         this.board = board;
+
+
     }
 
     /**
@@ -70,8 +72,8 @@ public class GameController {
     // XXX: V2
     public void startProgrammingPhase() {
         board.setPhase(Phase.PROGRAMMING);
-        board.setCurrentPlayer(board.getPlayer(0));
-        board.setStep(0);
+        board.setCurrentPlayer(board.getPlayer(turn));
+        board.setStep(turn);
 
         for (int i = 0; i < board.getPlayersNumber(); i++) {
             Player player = board.getPlayer(i);
@@ -103,10 +105,11 @@ public class GameController {
      */
     public void finishProgrammingPhase() {
         makeProgramFieldsInvisible();
-        makeProgramFieldsVisible(0);
+        makeProgramFieldsVisible(turn);
         board.setPhase(Phase.ACTIVATION);
-        board.setCurrentPlayer(board.getPlayer(0));
-        board.setStep(0);
+        board.setCurrentPlayer(board.getPlayer(turn));
+        board.setStep(turn);
+        turn= (board.getPlayerNumber(board.getCurrentPlayer()) + 1) % board.getPlayersNumber();
     }
 
     // XXX: V2
@@ -174,7 +177,7 @@ public class GameController {
                     if (step < Player.NO_REGISTERS) {
                         makeProgramFieldsVisible(step);
                         board.setStep(step);
-                        board.setCurrentPlayer(board.getPlayer(0));
+                        board.setCurrentPlayer(board.getPlayer(turn));
                     } else {
                         startProgrammingPhase();
                     }
