@@ -68,31 +68,66 @@ public class Board extends Subject {
                 Space space;
                 //Space space = new Space(this, x, y);
                 space = new Space(this, x, y);
-                if(x==4 && y==3) {
+
+                //wall 1 segments.
+                if(x==0 && y==3) {
+                    space.addWall(Heading.EAST);
+                }
+                    if(x==1 && y==3) {
+                        space.addWall(Heading.WEST);
+                    }
+                    //Wall 2.
+                if(x==1 && y==2) {
                     space.addWall(Heading.SOUTH);
-            }
-                if(x==4 && y==5) {
+                }
+                if(x==1 && y==3) {
                     space.addWall(Heading.NORTH);
                 }
-                if(x==5 && y==4) {
+
+
+
+                if(x==2 && y==2) {
+                    space.addWall(Heading.EAST);
+                }
+                if(x==3 && y==2) {
                     space.addWall(Heading.WEST);
                 }
 
-                if(x==3 && y==3) {
+                //Wall 3
+
+
+
+                if(x==2 && y==2) {
                     space.addWall(Heading.SOUTH);
-                }
-                if(x==3 && y==5) {
-                    space.addWall(Heading.NORTH);
-                }
-                if(x==2 && y==5) {
-                    space.addWall(Heading.NORTH);
                 }
                 if(x==2 && y==3) {
-                    space.addWall(Heading.SOUTH);
+                    space.addWall(Heading.NORTH);
                 }
-                if(x==1 && y==4) {
+
+
+
+
+
+                if(x==5 && y==3) {
+                    space.addWall(Heading.WEST);
+                }
+                if(x==4 && y==3) {
                     space.addWall(Heading.EAST);
                 }
+
+                if(x==5 && y==4) {
+                    space.addWall(Heading.WEST);
+                }
+                if(x==4 && y==4) {
+                    space.addWall(Heading.EAST);
+                }
+                if(x==5 && y==5) {
+                    space.addWall(Heading.WEST);
+                }
+                if(x==4 && y==5) {
+                    space.addWall(Heading.EAST);
+                }
+
                 spaces[x][y] = space;
             }
         }
