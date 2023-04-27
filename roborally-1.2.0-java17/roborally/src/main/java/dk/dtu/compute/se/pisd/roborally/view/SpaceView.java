@@ -21,6 +21,7 @@
  */
 package dk.dtu.compute.se.pisd.roborally.view;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.model.CheckPoint;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
@@ -59,6 +60,8 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.setMinHeight(SPACE_HEIGHT);
         this.setMaxHeight(SPACE_HEIGHT);
 
+
+
         if ((space.x + space.y) % 2 == 0) {
             this.setStyle("-fx-background-color: white;");
         }
@@ -72,6 +75,17 @@ public class SpaceView extends StackPane implements ViewObserver {
         if (space.getConveyor()!=null && space.getConveyor().getColour()=="green"){
             this.setStyle("-fx-background-color: #00ff0d;");
         }
+        if (space.getCheckPoint()!=null){
+            this.setStyle("-fx-background-color: rgba(191,0,255,0.71);");
+            Polygon check = new Polygon(0.0, 0.0,
+                    10.0, 20.0,
+                    20.0, 0.0 );
+            check.setFill(Color.RED);
+            check.setRotate((90*Heading.WEST.ordinal())%360);
+
+            this.getChildren().add(check);
+
+        }
 
         // updatePlayer();
 
@@ -82,8 +96,9 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     private void updatePlayer() {
         this.getChildren().clear();
-
         Player player = space.getPlayer();
+
+
 
 
         if (player != null) {

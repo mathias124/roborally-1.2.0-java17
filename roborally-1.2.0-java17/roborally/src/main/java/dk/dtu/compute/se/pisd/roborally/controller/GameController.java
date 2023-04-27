@@ -252,33 +252,14 @@ public class GameController {
                 // XXX note that this removes an other player from the space, when there
                 //     is another player on the target. Eventually, this needs to be
                 //     implemented in a way so that other players are pushed away!
-                if (target.getPlayer() != null) {
-                    Player old = target.getPlayer();
-                    moveForward(old);
-                }
+                robotCollide(target);
                 target.setPlayer(player);
+                player.setSpace(target);
             }
 
-        Space space3 = player.getSpace();
-         conveyorBelt conveyor = space3.getConveyor();
-        if(conveyor!=null){
-            String colour  = conveyor.getColour();
-            Heading heading2= conveyor.getDirection();
-            player.setHeading(heading2);
-            if(colour.equals("blue")){
-                this.fastForward(player);
-            }
-            else {
-                this.moveForward(player);
-            }
-
-
-
-
-
-
-        }}
-
+            conveyerTransport(player);
+            CheckPointTokener(player);
+        }
 
     }
 
@@ -388,6 +369,42 @@ public class GameController {
 
 
             }
+
+            public void conveyerTransport(Player player){
+                Space space3 = player.getSpace();
+                conveyorBelt conveyor = space3.getConveyor();
+                if(conveyor!=null){
+                    String colour  = conveyor.getColour();
+                    Heading heading2= conveyor.getDirection();
+                    player.setHeading(heading2);
+                    if(colour.equals("blue")){
+                        this.fastForward(player);
+                    }
+                    else {
+                        this.moveForward(player);
+                    }
+
+
+                }
+            }
+            public void robotCollide(Space target){
+                if (target.getPlayer() != null) {
+                    Player old = target.getPlayer();
+                    moveForward(old);
+                }
+
+
+            }
+            public void CheckPointTokener(Player player){
+            Space space=player.getSpace();
+              CheckPoint checkPoint = space.getCheckPoint();
+              if(checkPoint!=null && player.getTokens()==checkPoint.orderNo ){
+                player.setTokens(player.getTokens()+1);
+               }
+
+
+
+             }
 
 
 
