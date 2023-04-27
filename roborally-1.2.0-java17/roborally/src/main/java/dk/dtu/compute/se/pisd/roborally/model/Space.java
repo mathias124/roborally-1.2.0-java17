@@ -95,9 +95,7 @@ public class Space extends Subject {
         }
         Space checkNeighbor = board.getNeighbour(this, wallFace);
 
-        if (checkNeighbor.PlacedWall(Heading.EAST.next())) {
-            return false;
-        }
+
         if (checkNeighbor.getPlayer() == null) {
             return true;
         }

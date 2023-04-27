@@ -27,6 +27,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.List;
 
+import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
+
 /**
  * ...
  *
@@ -253,10 +255,11 @@ public class GameController {
         // return;
         //}
         //player.setSpace(playerSpace);
+        Heading heading = player.getHeading();
+        Space target = board.getNeighbour(space, heading);
+
         if (player != null && player.board == board && space != null && playerSpace.wallFace(player.getHeading())) {
 
-            Heading heading = player.getHeading();
-            Space target = board.getNeighbour(space, heading);
             if (target != null) {
                 // XXX note that this removes an other player from the space, when there
                 //     is another player on the target. Eventually, this needs to be
@@ -271,11 +274,11 @@ public class GameController {
             int check = 1;
             //int check =1;
             for (int i = 0; i < check; i++) {
-                if (!playerSpace.PlacedWall(player.getHeading())) {
+                if (!playerSpace.PlacedWall(player.getHeading()) || this.Checkheading(player) == Heading.NORTH ) {
                     continue;
                 }
                 playerSpace = player.board.getNeighbour(playerSpace, player.getHeading());
-                if (playerSpace.getPlayer() != null) {
+                if (playerSpace.getPlayer() != null && !playerSpace.PlacedWall(player.getHeading())) {
                     moveForward(player);
                 }
             }
@@ -304,8 +307,8 @@ public class GameController {
             player.setHeading(Heading.EAST);
 
         else if(board.getCurrentPlayer().getHeading()==Heading.EAST)
-            player.setHeading(Heading.SOUTH);
-        else if(board.getCurrentPlayer().getHeading()==Heading.SOUTH)
+            player.setHeading(SOUTH);
+        else if(board.getCurrentPlayer().getHeading()== SOUTH)
             player.setHeading(Heading.WEST);
         else if(board.getCurrentPlayer().getHeading()==Heading.WEST)
             player.setHeading(Heading.NORTH);
@@ -322,10 +325,10 @@ public class GameController {
             player.setHeading(Heading.WEST);
         else if(board.getCurrentPlayer().getHeading()==Heading.EAST)
             player.setHeading(Heading.NORTH);
-        else if(board.getCurrentPlayer().getHeading()==Heading.SOUTH)
+        else if(board.getCurrentPlayer().getHeading()== SOUTH)
             player.setHeading(Heading.EAST);
         else if(board.getCurrentPlayer().getHeading()==Heading.WEST)
-            player.setHeading(Heading.SOUTH);
+            player.setHeading(SOUTH);
     }
 
     boolean spaceTaken(Space space) {
@@ -377,6 +380,21 @@ public class GameController {
         // XXX just for now to indicate that the actual method is not yet implemented
         assert false;
     }
+    public Heading Checkheading(Player player) {
+        Heading playerDirection = player.getHeading();
+        Heading newDirect;
+        if(playerDirection == Heading.WEST) {
+            newDirect = Heading.EAST;
+        } else if (playerDirection == Heading.EAST) {
+            newDirect = Heading.WEST;
+        } else if (playerDirection == Heading.NORTH) {
+            newDirect = Heading.SOUTH;
+        }
+        else newDirect = Heading.NORTH;
+    return newDirect;
+
+    }
+
     /**
      Executes a command option for a player and continues the game with the OptionInteractive card. It sets phase to Activation Phase.
      @param player the player for whom to execute the command option
