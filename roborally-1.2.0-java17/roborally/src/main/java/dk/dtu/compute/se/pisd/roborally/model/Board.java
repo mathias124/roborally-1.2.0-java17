@@ -65,7 +65,69 @@ public class Board extends Subject {
         spaces = new Space[width][height];
         for (int x = 0; x < width; x++) {
             for(int y = 0; y < height; y++) {
-                Space space = new Space(this, x, y);
+                Space space;
+                //Space space = new Space(this, x, y);
+                space = new Space(this, x, y);
+
+                //wall 1 segments.
+                if(x==0 && y==3) {
+                    space.addWall(Heading.EAST);
+                }
+                    if(x==1 && y==3) {
+                        space.addWall(Heading.WEST);
+                    }
+                    //Wall 2.
+                if(x==1 && y==2) {
+                    space.addWall(Heading.SOUTH);
+                }
+                if(x==1 && y==3) {
+                    space.addWall(Heading.NORTH);
+                }
+
+
+
+                if(x==2 && y==2) {
+                    space.addWall(Heading.EAST);
+                }
+                if(x==3 && y==2) {
+                    space.addWall(Heading.WEST);
+                }
+
+                //Wall 3
+
+
+
+                if(x==2 && y==2) {
+                    space.addWall(Heading.SOUTH);
+                }
+                if(x==2 && y==3) {
+                    space.addWall(Heading.NORTH);
+                }
+
+
+
+
+
+                if(x==5 && y==3) {
+                    space.addWall(Heading.WEST);
+                }
+                if(x==4 && y==3) {
+                    space.addWall(Heading.EAST);
+                }
+
+                if(x==5 && y==4) {
+                    space.addWall(Heading.WEST);
+                }
+                if(x==4 && y==4) {
+                    space.addWall(Heading.EAST);
+                }
+                if(x==5 && y==5) {
+                    space.addWall(Heading.WEST);
+                }
+                if(x==4 && y==5) {
+                    space.addWall(Heading.EAST);
+                }
+
                 spaces[x][y] = space;
 
             }

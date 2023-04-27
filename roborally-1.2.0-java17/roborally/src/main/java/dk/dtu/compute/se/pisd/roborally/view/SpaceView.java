@@ -27,7 +27,7 @@ import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.StrokeLineCap;
@@ -44,6 +44,9 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     final public static int SPACE_HEIGHT = 60; // 75;
     final public static int SPACE_WIDTH = 60; // 75;
+
+   final public static Color wallColor = Color.BLUEVIOLET;
+    final public static double wallThickness = 2;
 
     public final Space space;
 
@@ -87,12 +90,21 @@ public class SpaceView extends StackPane implements ViewObserver {
 
         }
 
-        // updatePlayer();
+        double up = space.PlacedWall(Heading.NORTH) ? wallThickness : 0;
+        double right = space.PlacedWall(Heading.EAST) ? wallThickness : 0;
+        double down = space.PlacedWall(Heading.SOUTH) ? wallThickness : 0;
+        double left = space.PlacedWall(Heading.WEST) ? wallThickness : 0;
 
-        // This space view should listen to changes of the space
+        BorderWidths borderWidths = new BorderWidths(up, right, down, left);
+        BorderStroke borderStroke = new BorderStroke(wallColor, BorderStrokeStyle.SOLID, null, borderWidths);
+        Border border = new Border(borderStroke);
+        this.setBorder(border);
+
         space.attach(this);
         update(space);
     }
+
+
 
     private void updatePlayer() {
         this.getChildren().clear();

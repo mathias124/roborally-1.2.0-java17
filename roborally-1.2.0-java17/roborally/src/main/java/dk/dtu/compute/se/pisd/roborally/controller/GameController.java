@@ -27,6 +27,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.List;
 
+import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
+
 /**
  * ...
  *
@@ -43,8 +45,6 @@ public class GameController {
     int turn=0;
     public GameController(@NotNull Board board) {
         this.board = board;
-
-
     }
 
     /**
@@ -245,22 +245,50 @@ public class GameController {
      */
     public void moveForward(@NotNull Player player) {
         Space space = player.getSpace();
-        if (player != null && player.board == board && space != null) {
-            Heading heading = player.getHeading();
-            Space target = board.getNeighbour(space, heading);
+        Space playerSpace = player.getSpace();
+
+
+        //moveForward(playerSpace.getPlayer(), player.getHeading(),check);
+
+        //}
+        //if(spaceTaken(playerSpace)) {
+        // return;
+        //}
+        //player.setSpace(playerSpace);
+        Heading heading = player.getHeading();
+        Space target = board.getNeighbour(space, heading);
+
+        if (player != null && player.board == board && space != null && playerSpace.wallFace(player.getHeading())) {
+
             if (target != null) {
                 // XXX note that this removes an other player from the space, when there
                 //     is another player on the target. Eventually, this needs to be
                 //     implemented in a way so that other players are pushed away!
+                if (target.getPlayer() != null) {
+                    Player old = target.getPlayer();
+                    moveForward(old);
+                }
                 robotCollide(target);
+
                 target.setPlayer(player);
                 player.setSpace(target);
             }
-
+        } else if (player != null && player.board == board && space != null) {
+            int check = 1;
+            //int check =1;
+            for (int i = 0; i < check; i++) {
+                if (!playerSpace.PlacedWall(player.getHeading()) || this.Checkheading(player) == Heading.NORTH ) {
+                    continue;
+                }
+                playerSpace = player.board.getNeighbour(playerSpace, player.getHeading());
+                if (playerSpace.getPlayer() != null && !playerSpace.PlacedWall(player.getHeading())) {
+                    moveForward(player);
+                }
+            }
             conveyerTransport(player);
             CheckPointTokener(player);
-        }
 
+        }
     }
 
     /**
@@ -312,7 +340,11 @@ public class GameController {
         else if(board.getCurrentPlayer().getHeading()==Heading.SOUTH)
             player.setHeading(Heading.EAST);
         else if(board.getCurrentPlayer().getHeading()==Heading.WEST)
-            player.setHeading(Heading.SOUTH);
+            player.setHeading(SOUTH);
+    }
+
+    boolean spaceTaken(Space space) {
+        return space.getPlayer() !=null;
     }
 
 
@@ -343,6 +375,21 @@ public class GameController {
         // XXX just for now to indicate that the actual method is not yet implemented
         assert false;
     }
+    public Heading Checkheading(Player player) {
+        Heading playerDirection = player.getHeading();
+        Heading newDirect;
+        if(playerDirection == Heading.WEST) {
+            newDirect = Heading.EAST;
+        } else if (playerDirection == Heading.EAST) {
+            newDirect = Heading.WEST;
+        } else if (playerDirection == Heading.NORTH) {
+            newDirect = Heading.SOUTH;
+        }
+        else newDirect = Heading.NORTH;
+    return newDirect;
+
+    }
+
     /**
      Executes a command option for a player and continues the game with the OptionInteractive card. It sets phase to Activation Phase.
      @param player the player for whom to execute the command option
