@@ -129,9 +129,21 @@ public class Board extends Subject {
                 }
 
                 spaces[x][y] = space;
+
             }
         }
         this.stepMode = false;
+conveyorBelt con1 = new conveyorBelt("blue",Heading.SOUTH);
+        conveyorBelt con3 = new conveyorBelt("green",Heading.WEST);
+        CheckPoint checkPoint = new CheckPoint(0);
+
+        // Test for conveyor belt : Delete this later
+        spaces[2][0].setConveyor(con1);
+        spaces[3][4].setConveyor(con3);
+        spaces[0][5].setConveyor(con1);
+        spaces[5][7].setConveyor(con3);
+        spaces[4][2].setCheckPoint(checkPoint);
+
     }
 
     public Board(int width, int height) {
@@ -270,8 +282,8 @@ public class Board extends Subject {
 
         // XXX: V2 changed the status so that it shows the phase, the player and the step
         return "Phase: " + getPhase().name() +
-                ", Player = " + getCurrentPlayer().getName() +
-                ", Step: " + getStep();
+                ", Current player  " + getCurrentPlayer().getName() +
+                ", Step: " + getStep() + ", Token countrer: "+getCurrentPlayer().getTokens();
     }
 
 

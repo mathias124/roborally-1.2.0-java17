@@ -41,6 +41,15 @@ public class Player extends Subject {
 
     private String name;
     private String color;
+    private int tokens;
+
+    public int getTokens() {
+        return tokens;
+    }
+
+    public void setTokens(int tokens) {
+        this.tokens = tokens;
+    }
 
     private Space space;
     private Heading heading = SOUTH;

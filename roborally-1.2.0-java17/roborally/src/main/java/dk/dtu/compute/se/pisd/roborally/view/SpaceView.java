@@ -20,8 +20,8 @@
  *
  */
 package dk.dtu.compute.se.pisd.roborally.view;
-
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.model.CheckPoint;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
@@ -32,6 +32,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
+
 
 /**
  * ...
@@ -49,9 +50,9 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     public final Space space;
 
-
     public SpaceView(@NotNull Space space) {
         this.space = space;
+
 
         // XXX the following styling should better be done with styles
         this.setPrefWidth(SPACE_WIDTH);
@@ -62,10 +63,31 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.setMinHeight(SPACE_HEIGHT);
         this.setMaxHeight(SPACE_HEIGHT);
 
+
+
         if ((space.x + space.y) % 2 == 0) {
             this.setStyle("-fx-background-color: white;");
-        } else {
+        }
+
+        else {
             this.setStyle("-fx-background-color: black;");
+        }
+        if (space.getConveyor()!=null && space.getConveyor().getColour()=="blue"){
+            this.setStyle("-fx-background-color: #003cff;");
+        }
+        if (space.getConveyor()!=null && space.getConveyor().getColour()=="green"){
+            this.setStyle("-fx-background-color: #00ff0d;");
+        }
+        if (space.getCheckPoint()!=null){
+            this.setStyle("-fx-background-color: rgba(191,0,255,0.71);");
+            Polygon check = new Polygon(0.0, 0.0,
+                    10.0, 20.0,
+                    20.0, 0.0 );
+            check.setFill(Color.RED);
+            check.setRotate((90*Heading.WEST.ordinal())%360);
+
+            this.getChildren().add(check);
+
         }
 
         double up = space.PlacedWall(Heading.NORTH) ? wallThickness : 0;
@@ -86,8 +108,11 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     private void updatePlayer() {
         this.getChildren().clear();
-
         Player player = space.getPlayer();
+
+
+
+
         if (player != null) {
             Polygon arrow = new Polygon(0.0, 0.0,
                     10.0, 20.0,
@@ -101,6 +126,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             arrow.setRotate((90*player.getHeading().ordinal())%360);
             this.getChildren().add(arrow);
         }
+
     }
 
     @Override

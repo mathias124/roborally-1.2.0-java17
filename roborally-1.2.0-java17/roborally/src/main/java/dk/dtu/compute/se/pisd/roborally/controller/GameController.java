@@ -42,12 +42,13 @@ public class GameController {
      */
     final public Board board;
     final private List<String> OPTIONS_Interactive = Arrays.asList("Left","Right");
-
+    int turn=0;
     public GameController(@NotNull Board board) {
         this.board = board;
     }
 
     /**
+
      * @param space the space to which the current player should move
      */
     public void moveCurrentPlayerToSpace(@NotNull Space space)  {
@@ -61,8 +62,6 @@ public class GameController {
             Player currentPlayer = board.getCurrentPlayer();
             if (currentPlayer != null && space.getPlayer() == null) {
                 currentPlayer.setSpace(space);
-               //
-
                 int playerNumber = (board.getPlayerNumber(currentPlayer) + 1) % board.getPlayersNumber();
                 board.setCurrentPlayer(board.getPlayer(playerNumber));
             }
@@ -73,8 +72,8 @@ public class GameController {
     // XXX: V2
     public void startProgrammingPhase() {
         board.setPhase(Phase.PROGRAMMING);
-        board.setCurrentPlayer(board.getPlayer(0));
-        board.setStep(0);
+        board.setCurrentPlayer(board.getPlayer(turn));
+        board.setStep(turn);
 
         for (int i = 0; i < board.getPlayersNumber(); i++) {
             Player player = board.getPlayer(i);
@@ -106,10 +105,11 @@ public class GameController {
      */
     public void finishProgrammingPhase() {
         makeProgramFieldsInvisible();
-        makeProgramFieldsVisible(0);
+        makeProgramFieldsVisible(turn);
         board.setPhase(Phase.ACTIVATION);
-        board.setCurrentPlayer(board.getPlayer(0));
-        board.setStep(0);
+        board.setCurrentPlayer(board.getPlayer(turn));
+        board.setStep(turn);
+        turn= (board.getPlayerNumber(board.getCurrentPlayer()) + 1) % board.getPlayersNumber();
     }
 
     // XXX: V2
@@ -177,7 +177,7 @@ public class GameController {
                     if (step < Player.NO_REGISTERS) {
                         makeProgramFieldsVisible(step);
                         board.setStep(step);
-                        board.setCurrentPlayer(board.getPlayer(0));
+                        board.setCurrentPlayer(board.getPlayer(turn));
                     } else {
                         startProgrammingPhase();
                     }
@@ -268,7 +268,10 @@ public class GameController {
                     Player old = target.getPlayer();
                     moveForward(old);
                 }
+                robotCollide(target);
+
                 target.setPlayer(player);
+                player.setSpace(target);
             }
         } else if (player != null && player.board == board && space != null) {
             int check = 1;
@@ -282,6 +285,9 @@ public class GameController {
                     moveForward(player);
                 }
             }
+            conveyerTransport(player);
+            CheckPointTokener(player);
+
         }
     }
 
@@ -307,8 +313,8 @@ public class GameController {
             player.setHeading(Heading.EAST);
 
         else if(board.getCurrentPlayer().getHeading()==Heading.EAST)
-            player.setHeading(SOUTH);
-        else if(board.getCurrentPlayer().getHeading()== SOUTH)
+            player.setHeading(Heading.SOUTH);
+        else if(board.getCurrentPlayer().getHeading()==Heading.SOUTH)
             player.setHeading(Heading.WEST);
         else if(board.getCurrentPlayer().getHeading()==Heading.WEST)
             player.setHeading(Heading.NORTH);
@@ -320,12 +326,18 @@ public class GameController {
      * Moves the player's heading direction 90 degress, or left and checks for the current phasing direction.
      */
     public void turnLeft(@NotNull Player player) {
+       /* if (player != null && player.board == board) {
+
+            player.setHeading(player.getHeading().prev());
+        }
+
+        */
 
         if(board.getCurrentPlayer().getHeading()==Heading.NORTH)
             player.setHeading(Heading.WEST);
         else if(board.getCurrentPlayer().getHeading()==Heading.EAST)
             player.setHeading(Heading.NORTH);
-        else if(board.getCurrentPlayer().getHeading()== SOUTH)
+        else if(board.getCurrentPlayer().getHeading()==Heading.SOUTH)
             player.setHeading(Heading.EAST);
         else if(board.getCurrentPlayer().getHeading()==Heading.WEST)
             player.setHeading(SOUTH);
@@ -334,23 +346,6 @@ public class GameController {
     boolean spaceTaken(Space space) {
         return space.getPlayer() !=null;
     }
-   /* private void playerWallInteraction(@NotNull Player player, Heading playerDir, int amount){
-        Space playerSpace = player.getSpace();
-        //int check =1;
-        for(int i =0; i < amount; i++) {
-            if (!playerSpace.PlacedWall(playerDir)) {
-                continue;
-            }
-            playerSpace = player.board.getNeighbour(playerSpace, playerDir);
-            if (playerSpace.getPlayer() != null) {
-                playerWallInteraction(playerSpace.getPlayer(), playerDir,amount);
-            }
-        }
-            if(spaceTaken(playerSpace)) {
-                return;
-            }
-            player.setSpace(playerSpace);
-       */ //}
 
 
     public void uTurn(@NotNull Player player) {
@@ -421,6 +416,42 @@ public class GameController {
 
 
             }
+
+            public void conveyerTransport(Player player){
+                Space space3 = player.getSpace();
+                conveyorBelt conveyor = space3.getConveyor();
+                if(conveyor!=null){
+                    String colour  = conveyor.getColour();
+                    Heading heading2= conveyor.getDirection();
+                    player.setHeading(heading2);
+                    if(colour.equals("blue")){
+                        this.fastForward(player);
+                    }
+                    else {
+                        this.moveForward(player);
+                    }
+
+
+                }
+            }
+            public void robotCollide(Space target){
+                if (target.getPlayer() != null) {
+                    Player old = target.getPlayer();
+                    moveForward(old);
+                }
+
+
+            }
+            public void CheckPointTokener(Player player){
+            Space space=player.getSpace();
+              CheckPoint checkPoint = space.getCheckPoint();
+              if(checkPoint!=null && player.getTokens()==checkPoint.orderNo ){
+                player.setTokens(player.getTokens()+1);
+               }
+
+
+
+             }
 
 
 

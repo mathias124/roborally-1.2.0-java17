@@ -42,6 +42,8 @@ public class Space extends Subject {
     public final int y;
 
     private Player player;
+    private conveyorBelt Conveyor;
+    private CheckPoint checkPoint;
 
     public Space(Board board, int x, int y) {
         this(board, x, y, new Heading[0]);
@@ -109,4 +111,19 @@ public class Space extends Subject {
         notifyChange();
     }
 
+    public conveyorBelt getConveyor() {
+        return Conveyor;
+    }
+
+    public void setConveyor(conveyorBelt conveyor) {
+        Conveyor = conveyor;
+    }
+
+    public CheckPoint getCheckPoint() {
+        return checkPoint;
+    }
+
+    public void setCheckPoint(CheckPoint checkPoint) {
+        this.checkPoint = checkPoint;
+    }
 }
