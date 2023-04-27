@@ -340,11 +340,7 @@ public class GameController {
         else if(board.getCurrentPlayer().getHeading()==Heading.SOUTH)
             player.setHeading(Heading.EAST);
         else if(board.getCurrentPlayer().getHeading()==Heading.WEST)
-            player.setHeading(SOUTH);
-    }
-
-    boolean spaceTaken(Space space) {
-        return space.getPlayer() !=null;
+            player.setHeading(Heading.SOUTH);
     }
 
 

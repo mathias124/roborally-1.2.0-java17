@@ -27,11 +27,18 @@ import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+
+
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 
 /**
@@ -50,8 +57,10 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     public final Space space;
 
+
     public SpaceView(@NotNull Space space) {
         this.space = space;
+        //ImageView imageView = new ImageView(image);
 
 
         // XXX the following styling should better be done with styles
@@ -62,6 +71,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.setPrefHeight(SPACE_HEIGHT);
         this.setMinHeight(SPACE_HEIGHT);
         this.setMaxHeight(SPACE_HEIGHT);
+
 
 
 
@@ -78,15 +88,22 @@ public class SpaceView extends StackPane implements ViewObserver {
         if (space.getConveyor()!=null && space.getConveyor().getColour()=="green"){
             this.setStyle("-fx-background-color: #00ff0d;");
         }
-        if (space.getCheckPoint()!=null){
-            this.setStyle("-fx-background-color: rgba(191,0,255,0.71);");
-            Polygon check = new Polygon(0.0, 0.0,
-                    10.0, 20.0,
-                    20.0, 0.0 );
-            check.setFill(Color.RED);
-            check.setRotate((90*Heading.WEST.ordinal())%360);
+        if (space.getCheckPoint()!=null) {
+            ImageView imageView = new ImageView();
+            //Image image1 = new Image("cp1.png",60,60,false,false);
+            Image image2 = new Image("cp2.png",60,60,true,true);
+            imageView.setImage(image2);
+            this.getChildren().add(imageView);
 
-            this.getChildren().add(check);
+            this.setStyle("-fx-background-color: rgba(191,0,255,0.71);");
+
+           Polygon check = new Polygon(0.0, 0.0,
+               10.0, 20.0,
+                   20.0, 0.0 );
+           check.setFill(Color.RED);
+        check.setRotate((90*Heading.WEST.ordinal())%360);
+
+           this.getChildren().add(check);
 
         }
 
