@@ -136,13 +136,16 @@ public class Board extends Subject {
 conveyorBelt con1 = new conveyorBelt("blue",Heading.SOUTH);
         conveyorBelt con3 = new conveyorBelt("green",Heading.WEST);
         CheckPoint checkPoint = new CheckPoint(0);
-
+        CheckPoint checkPoint1 = new CheckPoint(1);
+        CheckPoint checkPoint2 = new CheckPoint(2);
         // Test for conveyor belt : Delete this later
         spaces[2][0].setConveyor(con1);
         spaces[3][4].setConveyor(con3);
         spaces[0][5].setConveyor(con1);
         spaces[5][7].setConveyor(con3);
         spaces[4][2].setCheckPoint(checkPoint);
+        spaces[6][4].setCheckPoint(checkPoint1);
+        spaces[7][7].setCheckPoint(checkPoint2);
 
     }
 

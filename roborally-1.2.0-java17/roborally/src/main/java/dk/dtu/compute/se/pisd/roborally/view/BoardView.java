@@ -29,6 +29,8 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -74,6 +76,28 @@ public class BoardView extends VBox implements ViewObserver {
                 SpaceView spaceView = new SpaceView(space);
 
                 spaces[x][y] = spaceView;
+                if (space.getCheckPoint()!=null && space.getCheckPoint().getOrderNo() ==0){
+
+                    ImageView imageView = new ImageView();
+                    Image image = new Image("cp1.png",60,60,false,false);
+
+                    imageView.setImage(image);
+                    spaceView.getChildren().add(imageView);
+                }
+                if (space.getCheckPoint()!=null && space.getCheckPoint().getOrderNo() ==1){
+                    ImageView imageView = new ImageView();
+                    Image image = new Image("cp2.png",60,60,false,false);
+                    imageView.setImage(image);
+                    spaceView.getChildren().add(imageView);
+                }
+                if (space.getCheckPoint()!=null && space.getCheckPoint().getOrderNo() ==2){
+
+                    ImageView imageView = new ImageView();
+                    Image image = new Image("cp3.png",60,60,false,false);
+                    imageView.setImage(image);
+                    spaceView.getChildren().add(imageView);
+                }
+
 
                 mainBoardPane.add(spaceView, x, y);
                 spaceView.setOnMouseClicked(spaceEventHandler);
