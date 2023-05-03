@@ -273,6 +273,10 @@ public class GameController {
                 target.setPlayer(player);
                 player.setSpace(target);
             }
+            /**
+             * Detects the player's heading and check if meets a wall on the same space as the player with a macthing heading.
+             * if it is the same it cannot move.(Continue if not).
+             */
         } else if (player != null && player.board == board && space != null) {
             int check = 1;
             //int check =1;

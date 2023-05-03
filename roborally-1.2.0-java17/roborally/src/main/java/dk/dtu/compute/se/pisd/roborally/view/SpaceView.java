@@ -82,6 +82,12 @@ public class SpaceView extends StackPane implements ViewObserver {
         else {
             this.setStyle("-fx-background-color: black;");
         }
+
+
+        /**
+         * Creates color for the spaces of each conveyer.
+         */
+
         if (space.getConveyor()!=null && space.getConveyor().getColour()=="blue"){
             this.setStyle("-fx-background-color: #003cff;");
         }
@@ -89,7 +95,10 @@ public class SpaceView extends StackPane implements ViewObserver {
             this.setStyle("-fx-background-color: #00ff0d;");
         }
 
-
+        /**
+         * The following code detects based on position of PlacedWall and Heading.
+         * It then creates a stroke(which fills out based on wallThinkness) for each wall and of course updates the space.
+         */
 
         double up = space.PlacedWall(Heading.NORTH) ? wallThickness : 0;
         double right = space.PlacedWall(Heading.EAST) ? wallThickness : 0;

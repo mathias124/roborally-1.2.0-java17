@@ -74,7 +74,10 @@ public class BoardView extends VBox implements ViewObserver {
                 Space space = board.getSpace(x, y);
 
                 SpaceView spaceView = new SpaceView(space);
-
+                /**
+                 * This takes an image using imageview loaded from our resource folder and then detects what @OrderNo is equally set as. This is made in BoardClass.
+                 * @board is used as the infrastructure to devide the points, because it calls the checkpoint object.(here we detect the checkpoint) and use the matching picture for OrderNo.
+                 */
                 spaces[x][y] = spaceView;
                 if (space.getCheckPoint()!=null && space.getCheckPoint().getOrderNo() ==0){
 
