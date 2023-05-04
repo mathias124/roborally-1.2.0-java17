@@ -129,6 +129,49 @@ public class SpaceView extends StackPane implements ViewObserver {
             imageView.setImage(image);
             this.getChildren().add(imageView);
         }
+        if (space.getConveyor()!=null && space.getConveyor().getColour()=="blue") {
+            ImageView imageView = new ImageView();
+            Image image = null;
+            if(space.getConveyor().getDirection() == Heading.WEST) {
+                image = new Image("BlueWest.png", 60, 60, false, false);
+            } else if(space.getConveyor().getDirection() == Heading.EAST ) {
+                image = new Image("BlueEast.png", 60, 60, false, false);
+            } else if ( space.getConveyor().getDirection() == Heading.SOUTH ) {
+                image = new Image("BlueSouth.png", 60, 60, false, false);
+            }else if (space.getConveyor().getDirection() == Heading.NORTH ) {
+                image = new Image("Blue.png", 60, 60, false, false);
+            }
+            imageView.setImage(image);
+            //if (space.getConveyor().getDirection() == Heading.EAST) {
+            //   ImageView.setRotate((90*space.getConveyor().getDirection().ordinal())%360);
+
+            this.getChildren().add(imageView);
+            //}
+        }
+
+        else if (space.getConveyor()!=null && space.getConveyor().getColour()=="green") {
+            ImageView imageView = new ImageView();
+            Image image = null;
+            if(space.getConveyor().getDirection() == Heading.WEST) {
+                image = new Image("GreenWest.png", 60, 60, false, false);
+            } else if(space.getConveyor().getDirection() == Heading.EAST ) {
+                image = new Image("GreenEastt.png", 60, 60, false, false);
+            } else if ( space.getConveyor().getDirection() == Heading.SOUTH ) {
+                image = new Image("GreenSouth.png", 60, 60, false, false);
+            }else if (space.getConveyor().getDirection() == Heading.NORTH ) {
+                image = new Image("Green.png", 60, 60, false, false);
+            }
+            imageView.setImage(image);
+            //if (space.getConveyor().getDirection() == Heading.EAST) {
+            //   ImageView.setRotate((90*space.getConveyor().getDirection().ordinal())%360);
+
+            this.getChildren().add(imageView);
+            //}
+        }
+
+
+
+
 
 
         Player player = space.getPlayer();
