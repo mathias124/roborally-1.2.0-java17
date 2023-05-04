@@ -80,20 +80,42 @@ public class BoardView extends VBox implements ViewObserver {
                  */
                 spaces[x][y] = spaceView;
                 /**
-                 * Creates color for the spaces of each conveyer and creates picture.
+                 * This takes an image using imageview loaded from our resource folder and then detects what getDirection is equally set as from the object of the conveyer. This is made in BoardClass.
+                 *  * Creates color for the spaces of each conveyer and creates picture.
                  */
 
-                if (space.getConveyor()!=null && space.getConveyor().getColour()=="blue"){
+                if (space.getConveyor()!=null && space.getConveyor().getColour()=="blue") {
                     ImageView imageView = new ImageView();
-                    Image image = new Image("Blue.png",60,60,false,false);
-
+                    Image image = null;
+                    if(space.getConveyor().getDirection() == Heading.WEST) {
+                        image = new Image("BlueWest.png", 60, 60, false, false);
+                    } else if(space.getConveyor().getDirection() == Heading.EAST ) {
+                        image = new Image("BlueEast.png", 60, 60, false, false);
+                    } else if ( space.getConveyor().getDirection() == Heading.SOUTH ) {
+                        image = new Image("BlueSouth.png", 60, 60, false, false);
+                    }else if (space.getConveyor().getDirection() == Heading.NORTH ) {
+                        image = new Image("Blue.png", 60, 60, false, false);
+                    }
                     imageView.setImage(image);
+                    //if (space.getConveyor().getDirection() == Heading.EAST) {
+                    //   ImageView.setRotate((90*space.getConveyor().getDirection().ordinal())%360);
+
                     spaceView.getChildren().add(imageView);
+                    //}
                 }
+
                 if (space.getConveyor()!=null && space.getConveyor().getColour()=="green") {
                     ImageView imageView = new ImageView();
-                    Image image = new Image("Green.png", 60, 60, false, false);
-
+                    Image image = null;
+                    if(space.getConveyor().getDirection() == Heading.WEST) {
+                         image = new Image("GreenWest.png", 60, 60, false, false);
+                    } else if(space.getConveyor().getDirection() == Heading.EAST ) {
+                        image = new Image("GreenEastt.png", 60, 60, false, false);
+                    } else if ( space.getConveyor().getDirection() == Heading.SOUTH ) {
+                        image = new Image("GreenSouth.png", 60, 60, false, false);
+                    }else if (space.getConveyor().getDirection() == Heading.NORTH ) {
+                        image = new Image("Green.png", 60, 60, false, false);
+                    }
                     imageView.setImage(image);
                    //if (space.getConveyor().getDirection() == Heading.EAST) {
                      //   ImageView.setRotate((90*space.getConveyor().getDirection().ordinal())%360);
