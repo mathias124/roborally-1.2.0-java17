@@ -54,6 +54,8 @@ public class SpaceView extends StackPane implements ViewObserver {
 
    final public static Color wallColor = Color.BLUEVIOLET;
     final public static double wallThickness = 2;
+    ImageView imageView = new ImageView();
+    Image image = new Image("Green.png",60,60,false,false);
 
     public final Space space;
 
@@ -84,16 +86,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
 
 
-        /**
-         * Creates color for the spaces of each conveyer.
-         */
 
-        if (space.getConveyor()!=null && space.getConveyor().getColour()=="blue"){
-            this.setStyle("-fx-background-color: #003cff;");
-        }
-        if (space.getConveyor()!=null && space.getConveyor().getColour()=="green"){
-            this.setStyle("-fx-background-color: #00ff0d;");
-        }
 
         /**
          * The following code detects based on position of PlacedWall and Heading.

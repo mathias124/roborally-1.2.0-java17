@@ -79,6 +79,30 @@ public class BoardView extends VBox implements ViewObserver {
                  * @board is used as the infrastructure to devide the points, because it calls the checkpoint object.(here we detect the checkpoint) and use the matching picture for OrderNo.
                  */
                 spaces[x][y] = spaceView;
+                /**
+                 * Creates color for the spaces of each conveyer and creates picture.
+                 */
+
+                if (space.getConveyor()!=null && space.getConveyor().getColour()=="blue"){
+                    ImageView imageView = new ImageView();
+                    Image image = new Image("Blue.png",60,60,false,false);
+
+                    imageView.setImage(image);
+                    spaceView.getChildren().add(imageView);
+                }
+                if (space.getConveyor()!=null && space.getConveyor().getColour()=="green") {
+                    ImageView imageView = new ImageView();
+                    Image image = new Image("Green.png", 60, 60, false, false);
+
+                    imageView.setImage(image);
+                   //if (space.getConveyor().getDirection() == Heading.EAST) {
+                     //   ImageView.setRotate((90*space.getConveyor().getDirection().ordinal())%360);
+
+                        spaceView.getChildren().add(imageView);
+                    //}
+                }
+
+
                 if (space.getCheckPoint()!=null && space.getCheckPoint().getOrderNo() ==0){
 
                     ImageView imageView = new ImageView();

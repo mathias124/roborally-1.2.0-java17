@@ -16,6 +16,8 @@ public class conveyorBelt implements Observer {
     }
 
     public String getColour() {
+
+
         return colour;
     }
 
