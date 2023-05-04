@@ -62,7 +62,7 @@ public class GameController {
             Player currentPlayer = board.getCurrentPlayer();
             if (currentPlayer != null && space.getPlayer() == null) {
                 currentPlayer.setSpace(space);
-                int playerNumber = (board.getPlayerNumber(currentPlayer) + 1) % board.getPlayersNumber();
+                int playerNumber = turn;
                 board.setCurrentPlayer(board.getPlayer(playerNumber));
             }
         }
@@ -109,7 +109,6 @@ public class GameController {
         board.setPhase(Phase.ACTIVATION);
         board.setCurrentPlayer(board.getPlayer(turn));
         board.setStep(turn);
-        turn= (board.getPlayerNumber(board.getCurrentPlayer()) + 1) % board.getPlayersNumber();
     }
 
     // XXX: V2
@@ -156,6 +155,9 @@ public class GameController {
     // XXX: V2
     private void executeNextStep() {
         Player currentPlayer = board.getCurrentPlayer();
+
+
+
         if (board.getPhase() == Phase.ACTIVATION && currentPlayer != null) {
             int step = board.getStep();
             if (step >= 0 && step < Player.NO_REGISTERS) {
@@ -179,6 +181,7 @@ public class GameController {
                         board.setStep(step);
                         board.setCurrentPlayer(board.getPlayer(turn));
                     } else {
+                        turn=(turn+1) % board.getPlayersNumber();
                         startProgrammingPhase();
                     }
                 }
@@ -190,6 +193,8 @@ public class GameController {
             // this should not happen
             assert false;
         }
+       // turn=1;
+       // board.setCurrentPlayer(board.getPlayer(turn));
     }
 
     /**
@@ -264,14 +269,14 @@ public class GameController {
                 // XXX note that this removes an other player from the space, when there
                 //     is another player on the target. Eventually, this needs to be
                 //     implemented in a way so that other players are pushed away!
-                if (target.getPlayer() != null) {
-                    Player old = target.getPlayer();
-                    moveForward(old);
-                }
+
                 robotCollide(target);
 
                 target.setPlayer(player);
                 player.setSpace(target);
+
+                conveyerTransport(player);
+                CheckPointTokener(player);
             }
             /**
              * Detects the player's heading and check if meets a wall on the same space as the player with a macthing heading.
@@ -289,8 +294,7 @@ public class GameController {
                     moveForward(player);
                 }
             }
-            conveyerTransport(player);
-            CheckPointTokener(player);
+
 
         }
     }
@@ -403,18 +407,15 @@ public class GameController {
 
 
             int step = board.getStep();
-
                     step++;
                     if (step < Player.NO_REGISTERS) {
                         makeProgramFieldsVisible(step);
                         board.setStep(step);
-                        board.setCurrentPlayer(board.getPlayer(0));
+                        board.setCurrentPlayer(board.getPlayer(turn));
                     } else {
                         startProgrammingPhase();
                     }
                     continuePrograms();
-
-
             }
 
             public void conveyerTransport(Player player){

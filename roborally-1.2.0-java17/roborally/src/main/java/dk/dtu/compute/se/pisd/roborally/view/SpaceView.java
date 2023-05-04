@@ -111,6 +111,26 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     private void updatePlayer() {
         this.getChildren().clear();
+        if(space.getCheckPoint()!=null &&space.getCheckPoint().getOrderNo()==0){
+            ImageView imageView = new ImageView();
+            Image image = new Image("cp1.png",60,60,false,false);
+            imageView.setImage(image);
+            this.getChildren().add(imageView);
+        }
+        else if (space.getCheckPoint()!=null &&space.getCheckPoint().getOrderNo()==1){
+            ImageView imageView = new ImageView();
+            Image image = new Image("cp2.png",60,60,false,false);
+            imageView.setImage(image);
+            this.getChildren().add(imageView);
+        }
+        else if (space.getCheckPoint()!=null && space.getCheckPoint().getOrderNo()==2){
+            ImageView imageView = new ImageView();
+            Image image = new Image("cp3.png",60,60,false,false);
+            imageView.setImage(image);
+            this.getChildren().add(imageView);
+        }
+
+
         Player player = space.getPlayer();
 
 
