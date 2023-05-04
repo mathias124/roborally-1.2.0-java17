@@ -62,7 +62,7 @@ public class GameController {
             Player currentPlayer = board.getCurrentPlayer();
             if (currentPlayer != null && space.getPlayer() == null) {
                 currentPlayer.setSpace(space);
-                int playerNumber = (board.getPlayerNumber(currentPlayer) + 1) % board.getPlayersNumber();
+                int playerNumber = turn;
                 board.setCurrentPlayer(board.getPlayer(playerNumber));
             }
         }
